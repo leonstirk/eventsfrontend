@@ -1,4 +1,4 @@
-const API_URL = "https://your-api-id.execute-api.ap-southeast-2.amazonaws.com/prod/events";
+const API_URL = "https://tdmukcers6.execute-api.ap-southeast-2.amazonaws.com/events";
 
 function fetchEvents() {
     fetch(API_URL)
