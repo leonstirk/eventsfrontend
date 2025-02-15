@@ -19,6 +19,9 @@
     <script src="https://cdn.jsdelivr.net/npm/@aws/amazon-location-utilities-auth-helper@1"></script>
     <script src="https://cdn.jsdelivr.net/npm/@aws/amazon-location-client@1.2"></script>
 
+    <!-- FOR EVENTFINDA API -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    
     <!-- Link to the first Amazon Location Map App's CSS and JavaScript -->
     <script src="utils.js"></script>
     <script src="app.js"></script>
@@ -72,87 +75,106 @@
        return map;                           // Return the initialized map
      }
 
+
+     var username = 'na14';
+     var password = 'cc2pjkc8bp4m';
+     $.ajax({
+       url: 'https://api.eventfinda.co.nz/v/events.json',
+       beforeSend: function (xhr) {
+	 xhr.setRequestHeader ("Authorization", "Basic " + btoa(username + ":" + password));
+       },
+       success: function(xhr) {
+	 console.log(xhr);
+       }
+     });
+
+     
      
      /**
       * Gets a GeoPlaces instance for Places operations.
       */
-     function getGeoPlaces(map) {
-       const authHelper = amazonLocationClient.withAPIKey(API_KEY, AWS_REGION);                      // Authenticate using the API key and AWS region
-       const locationClient = new amazonLocationClient.GeoPlacesClient(authHelper.getClientConfig()); // Create a GeoPlaces client
-       const geoPlaces = new GeoPlaces(locationClient, map);                                          // Create GeoPlaces instance
-       return geoPlaces;                                                                              // Return the GeoPlaces instance
-     }
+     /* function getGeoPlaces(map) {
+      *   const authHelper = amazonLocationClient.withAPIKey(API_KEY, AWS_REGION);                      // Authenticate using the API key and AWS region
+      *   const locationClient = new amazonLocationClient.GeoPlacesClient(authHelper.getClientConfig()); // Create a GeoPlaces client
+      *   const geoPlaces = new GeoPlaces(locationClient, map);                                          // Create GeoPlaces instance
+      *   return geoPlaces;                                                                              // Return the GeoPlaces instance
+      * }
 
-
+      */
      /**
       * Adds search box to the map.
       */
-     function addSearchBox(map, geoPlaces) {
-       const searchBox = new MaplibreGeocoder(geoPlaces, {
-	 maplibregl,
-	 showResultsWhileTyping: true,                    // Show results while typing
-	 debounceSearch: 300,                             // Debounce search requests
-	 limit: 30,                                       // Limit number of results
-	 popuprender: renderPopup,                        // Function to render popup
-	 reverseGeocode: true,                            // Enable reverse geocoding
-	 zoom: 14,                                        // Zoom level on result selection
-	 placeholder: "Search text or nearby (lat,long)"  // Placeholder text for search box.
-       });
+     /* function addSearchBox(map, geoPlaces) {
+      *   const searchBox = new MaplibreGeocoder(geoPlaces, {
+	maplibregl,
+	showResultsWhileTyping: true,                    // Show results while typing
+	debounceSearch: 300,                             // Debounce search requests
+	limit: 30,                                       // Limit number of results
+	popuprender: renderPopup,                        // Function to render popup
+	reverseGeocode: true,                            // Enable reverse geocoding
+	zoom: 14,                                        // Zoom level on result selection
+	placeholder: "Search text or nearby (lat,long)"  // Placeholder text for search box.
+      *   });
 
-       // Add the search box to the map
-       map.addControl(searchBox, 'top-left');
+      *   // Add the search box to the map
+      *   map.addControl(searchBox, 'top-left');
 
-       // Event listener for when a search result is selected
-       searchBox.on('result', async (event) => {
-	 const { id, result_type } = event.result;                     // Get result ID and type
-	 if (result_type === "Place") {                                // Check if the result is a place
-	   const placeResults = await geoPlaces.searchByPlaceId(id); // Fetch details for the selected place
-	   if (placeResults.features.length) {
-	     createPopup(placeResults.features[0]).addTo(map);     // Create and add popup for the place
-	   }
-	 }
-       });
-     }
-
+      *   // Event listener for when a search result is selected
+      *   searchBox.on('result', async (event) => {
+	const { id, result_type } = event.result;                     // Get result ID and type
+	if (result_type === "Place") {                                // Check if the result is a place
+	const placeResults = await geoPlaces.searchByPlaceId(id); // Fetch details for the selected place
+	if (placeResults.features.length) {
+	createPopup(placeResults.features[0]).addTo(map);     // Create and add popup for the place
+	}
+	}
+      *   });
+      * }
+      */
      
      /**
       * Renders the popup content for a given feature.
       */
-     function renderPopup(feature) {
-       return `<div class="popup-content"><span class="${feature.place_type.toLowerCase()} badge">${feature.place_type}</span><br>${feature.place_name}</div>`;
-     }
-
+     /* function renderPopup(feature) {
+      *   return `<div class="popup-content"><span class="${feature.place_type.toLowerCase()} badge">${feature.place_type}</span><br>${feature.place_name}</div>`;
+      * }
+      */
      
      /**
       * Creates a popup for a given feature and sets its position.
       */
-     function createPopup(feature) {
-       return new maplibregl.Popup({ offset: 30 })      // Create a new popup
-			    .setLngLat(feature.geometry.coordinates)     // Set the popup position
-			    .setHTML(renderPopup(feature));              // Set the popup content
-     }
+     /* function createPopup(feature) {
+      *   return new maplibregl.Popup({ offset: 30 })      // Create a new popup
+	.setLngLat(feature.geometry.coordinates)     // Set the popup position
+	.setHTML(renderPopup(feature));              // Set the popup content
+      * } */
      
 
      /**
       * Sets up reverse geocoding on map click events.
       */
-     function addMapClick(map, geoPlaces) {
-       map.on('click', async ({ lngLat }) => {                     // Listen for click events on the map
-	 const response = await geoPlaces.reverseGeocode({ query: [lngLat.lng, lngLat.lat], limit: 1, click: true }); // Perform reverse geocoding
+     /* function addMapClick(map, geoPlaces) {
+      *   map.on('click', async ({ lngLat }) => {                     // Listen for click events on the map
+	const response = await geoPlaces.reverseGeocode({ query: [lngLat.lng, lngLat.lat], limit: 1, click: true }); // Perform reverse geocoding
 
-         if (response.features.length) {                         // If there are results
-	   const clickMarker = new maplibregl.Marker({ color: "orange" }); // Create a marker
-	   const feature = response.features[0];               // Get the clicked feature
-	   const clickedPopup = createPopup(feature);          // Create popup for the clicked feature
-	   clickMarker.setLngLat(feature.geometry.coordinates) // Set marker position
-		      .setPopup(clickedPopup)                         // Attach popup to marker
-		      .addTo(map);                                    // Add marker to the map
+      *     if (response.features.length) {                         // If there are results
+	const clickMarker = new maplibregl.Marker({ color: "orange" }); // Create a marker
+	const feature = response.features[0];               // Get the clicked feature
+	const clickedPopup = createPopup(feature);          // Create popup for the clicked feature
+	clickMarker.setLngLat(feature.geometry.coordinates) // Set marker position
+	.setPopup(clickedPopup)                         // Attach popup to marker
+	.addTo(map);                                    // Add marker to the map
 
-           clickedPopup.on('close', () => clickMarker.remove()).addTo(map); // Remove marker when popup is closed
-	 }
-       });
-     }
-							    
+      *       clickedPopup.on('close', () => clickMarker.remove()).addTo(map); // Remove marker when popup is closed
+	}
+      *   });
+      * }
+      */
+
+
+
+    
+     
     </script>
   </body>
 </html>

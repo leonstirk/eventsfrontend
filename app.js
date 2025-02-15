@@ -27,3 +27,23 @@ async function fetchAndDisplayEvents(map) {
     }
 }
 
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>
+
+var username = 'na14';
+var password = 'cc2pjkc8bp4m';
+$.ajax({
+    url: 'https://api.eventfinda.co.nz/v/events.json',
+    beforeSend: function (xhr) {
+	xhr.setRequestHeader ("Authorization", "Basic " + btoa(username + ":" + password));
+    },
+    success: function(xhr) {
+	console.log(xhr);
+    }
+});
+</script>
+
+
+https://api.eventfinda.co.nz/v2/events.xml?row=10&fields=event:(url,name,sessions),session:(timezone,datetime_start)&q=concert&order=popularity
