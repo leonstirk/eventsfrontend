@@ -60,9 +60,22 @@
 	 zoom: 10,                         // Initial zoom level
 	 validateStyle: false              // Disable style validation
        });
+
+
+       console.log("â Map initialized!");
+
+       // Fetch and display events when the map is ready
+       map.on('load', () => {
+	 fetchAndDisplayEvents(map);
+       });
+
+       
        return map;                           // Return the initialized map
      }
 
+
+
+     
      
      /**
       * Gets a GeoPlaces instance for Places operations.
