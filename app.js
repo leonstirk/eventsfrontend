@@ -57,10 +57,6 @@ async function fetchAndDisplayEvents() {
     }
 }
 
-fetchEvents();
-
-
-
 // const EVENTFINDA_API_URL = "https://api.eventfinda.co.nz/v2/events.json?rows=20";  // Fetches 20 events
 // const EVENTFINDA_USERNAME = "na14";  // Replace with your Eventfinda username
 // const EVENTFINDA_PASSWORD = "cc2pjkc8bp4m";  // Replace with your Eventfinda password
