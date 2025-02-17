@@ -11,7 +11,7 @@ async function fetchAndDisplayEvents(map) {
     console.log(`Fetching events near: ${lat}, ${lng}, Radius: ${radius}km`);
 
     // Construct API request URL
-    const url = `${API_GATEWAY_URL}?lat=${lat}&lng=${lng}&radius=${radius}`;
+    const url = `${API_GATEWAY_URL}?point=${lat},${lng}&radius=${radius}`;
 
     try {
 	const response = await fetch(url);
