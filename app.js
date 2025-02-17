@@ -32,7 +32,7 @@ const API_GATEWAY_URL = "https://6hei99srqe.execute-api.ap-southeast-2.amazonaws
 
 async function fetchAndDisplayEvents() {
     try {
-	const response = await fetch(`${API_GATEWAY_URL}?location=wellington`);
+	const response = await fetch(`${API_GATEWAY_URL}?rows=20`);
 	const data = await response.json();
 	console.log(data);
 
