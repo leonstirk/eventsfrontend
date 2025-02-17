@@ -43,6 +43,12 @@
      const map = initializeMap("Standard","Light");
      // Step 2.2 Add navigation controls to the map
      map.addControl(new maplibregl.NavigationControl());
+     // Step something
+     // Fetch events whenever the map is moved
+     map.on("moveend", () => {
+       fetchAndDisplayEvents(map);
+     });
+     
      // Step 3: Add places features to application
      // Step 3.1: Get GeoPlaces instance. It will be used for addion search box and map click functionality
      // const geoPlaces = getGeoPlaces(map);
