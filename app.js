@@ -34,7 +34,7 @@ function addEventsToMap(events, map) {
     // Loop through events and add markers
     events.events.forEach(event => {
 	const marker = new maplibregl.Marker({ color: "red" })
-	      .setLngLat([event.point.lon, event.point.lat])
+	      .setLngLat([event.point.lng, event.point.lat])
 	      .setPopup(new maplibregl.Popup().setText(event.name)) // Show event name on click
 	      .addTo(map);
 
