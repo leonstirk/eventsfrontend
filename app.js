@@ -6,11 +6,12 @@ async function fetchAndDisplayEvents(map) {
     const lat = center.lat;
     const lng = center.lng;
     const radius = 5; // Default radius in km
-
+    const rows = 40; // Default number of rows 40
+    
     console.log(`Fetching events near: ${lat}, ${lng}, Radius: ${radius}km`);
 
     // Construct API request URL
-    const url = `${API_GATEWAY_URL}?lat=${lat}&lng=${lng}&radius=${radius}`;
+    const url = `${API_GATEWAY_URL}?lat=${lat}&lng=${lng}&radius=${radius}&rows=${rows}&order=distance`;
 
     try {
 	const response = await fetch(url);
@@ -39,6 +40,7 @@ function addEventsToMap(events, map) {
 	      .addTo(map);
 
 	window.eventMarkers.push(marker);
+	console.log("Marker added")
     });
 
     console.log("Markers added to map.");
