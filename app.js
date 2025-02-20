@@ -1,16 +1,29 @@
 const API_GATEWAY_URL = "https://6hei99srqe.execute-api.ap-southeast-2.amazonaws.com/";
 
+function getFutureDateISO() {
+    const now = new Date();
+    now.setDate(now.getDate() + 2); // Add 2 days
+
+    // Format as YYYY-MM-DD HH:mm:ss
+    const formattedDate = now.toISOString().split('T')[0] + " " +
+	  now.toISOString().split('T')[1].split('.')[0];
+
+    return formattedDate;
+}
+
+// console.log(getFutureDateISO());  // Example Output: "2024-03-01 14:30:00"
 
 async function fetchAndDisplayEvents(map) {
     // Get current map center
     const center = map.getCenter();
     const lat = center.lat;
     const lng = center.lng;
-    const radius = 10; // Default radius in km
+    const radius = 0.5; // Default radius in km
     const rows = 20; // Request 20 rows
+    const end_date = getFutureDateISO()
 
     // Construct API request URL
-    const url = `${API_GATEWAY_URL}?lat=${lat}&lng=${lng}&radius=${radius}&rows=${rows}&order=distance`;
+    const url = `${API_GATEWAY_URL}?lat=${lat}&lng=${lng}&radius=${radius}&rows=${rows}&order=distance$end_date=${end_date}`;
 
     console.log(`API Request URL: ${url}`);
 
