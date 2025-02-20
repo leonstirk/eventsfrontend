@@ -4,14 +4,12 @@ function getFutureDateISO() {
     const now = new Date();
     now.setDate(now.getDate() + 2); // Add 2 days
 
-    // Format as YYYY-MM-DD HH:mm:ss
-    const formattedDate = now.toISOString().split('T')[0] + " " +
-	  now.toISOString().split('T')[1].split('.')[0];
+    // Convert to ISO format and remove milliseconds
+    const formattedDate = now.toISOString().split('.')[0]; // "YYYY-MM-DDTHH:mm:ss"
 
-    return formattedDate;
+    // Encode for URL
+    return encodeURIComponent(formattedDate);
 }
-
-// console.log(getFutureDateISO());  // Example Output: "2024-03-01 14:30:00"
 
 async function fetchAndDisplayEvents(map) {
     // Get current map center
@@ -23,7 +21,7 @@ async function fetchAndDisplayEvents(map) {
     const end_date = getFutureDateISO()
 
     // Construct API request URL
-    const url = `${API_GATEWAY_URL}?lat=${lat}&lng=${lng}&radius=${radius}&rows=${rows}&order=distance$end_date=${end_date}`;
+    const url = `${API_GATEWAY_URL}?lat=${lat}&lng=${lng}&radius=${radius}&rows=${rows}&order=distance&end_date=${end_date}`;
 
     console.log(`API Request URL: ${url}`);
 
