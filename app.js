@@ -2,7 +2,7 @@ const API_GATEWAY_URL = "https://6hei99srqe.execute-api.ap-southeast-2.amazonaws
 
 function getFutureDateISO() {
     const now = new Date();
-    now.setDate(now.getDate() + 0); // Add 2 days
+    now.setDate(now.getDate() + 0.5); // Add half a day
 
     // Convert to ISO format and remove milliseconds
     const formattedDate = now.toISOString().split('.')[0]; // "YYYY-MM-DDTHH:mm:ss"
