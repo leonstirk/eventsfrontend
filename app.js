@@ -5,7 +5,7 @@ async function fetchAndDisplayEvents(map) {
     const center = map.getCenter();
     const lat = center.lat;
     const lng = center.lng;
-    const radius = 5; // Default radius in km
+    const radius = 10; // Default radius in km
     const rows = 40; // Default number of rows 40
     
     console.log(`Fetching events near: ${lat}, ${lng}, Radius: ${radius}km`);
