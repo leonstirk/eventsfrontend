@@ -53,13 +53,33 @@ function addEventsToMap(events, map) {
 
     // Loop through events and add markers
     events.events.forEach(event => {
+	// Build popup content with additional event information
+	let popupContent = `<strong>${event.name}</strong><br>`;
+
+	// Optionally add venue info if available
+	if (event.venue) {
+	    // If event.venue is an object with a name property, use that; otherwise, use event.venue directly.
+	    popupContent += `<em>${event.venue.name || event.venue}</em><br>`;
+	}
+
+	// Include event date/time if provided
+	if (event.date) {
+	    popupContent += `Date: ${event.date}<br>`;
+	}
+
+	// Include URL if provided
+	if (event.url) {
+	    popupContent += `<a href="${event.url}" target="_blank">More Info</a>`;
+	}
+
+	// Create marker and attach the popup
 	const marker = new maplibregl.Marker({ color: "red" })
 	      .setLngLat([event.point.lng, event.point.lat])
-	      .setPopup(new maplibregl.Popup().setText(event.name)) // Show event name on click
+	      .setPopup(new maplibregl.Popup().setHTML(popupContent))
 	      .addTo(map);
 
 	window.eventMarkers.push(marker);
-	console.log("Marker added")
+	console.log("Marker added");
     });
 
     console.log("Markers added to map.");
