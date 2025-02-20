@@ -2,7 +2,7 @@ const API_GATEWAY_URL = "https://6hei99srqe.execute-api.ap-southeast-2.amazonaws
 
 function getFutureDateISO() {
     const now = new Date();
-    now.setDate(now.getDate() + 1); // Add 2 days
+    now.setDate(now.getDate() + 0); // Add 2 days
 
     // Convert to ISO format and remove milliseconds
     const formattedDate = now.toISOString().split('.')[0]; // "YYYY-MM-DDTHH:mm:ss"
@@ -16,7 +16,7 @@ async function fetchAndDisplayEvents(map) {
     const center = map.getCenter();
     const lat = center.lat;
     const lng = center.lng;
-    const radius = 0.2; // Default radius in km
+    const radius = 5; // Default radius in km
     const rows = 20; // Request 20 rows
     const end_date = getFutureDateISO()
 
